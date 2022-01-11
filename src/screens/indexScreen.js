@@ -16,12 +16,12 @@ const IndexScreen = ({ navigation }) => {
 
   // section 12 134 context is the way to moving information not to manage state
   // managing state are using useState
+
   return (
     <View>
-      <Button title="Add Posts" onPress={addBlogPost} />
       <FlatList
         data={state}
-        keyExtractor={(blogPost) => blogPost.title}
+        keyExtractor={(blogPost) => blogPost.id}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -45,6 +45,16 @@ const IndexScreen = ({ navigation }) => {
       />
     </View>
   );
+};
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+        <Feather name="plus" size={30} />
+      </TouchableOpacity>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
