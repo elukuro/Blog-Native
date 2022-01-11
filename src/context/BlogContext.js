@@ -14,8 +14,13 @@ const blogReducer = (state, action) => {
           title: `Blog post # ${state.length + 1}`,
         },
       ];
+
     case "DELETE_BLOGPOST":
       return state.filter((post) => post.id !== action.payload);
+
+    case "SHOW_BLOGPOST":
+      return state.find((post) => post.id === action.payload);
+
     default:
       return state;
   }
@@ -61,8 +66,14 @@ const deleteBlogPost = (dispatch) => {
   };
 };
 
+const showBlogPost = (dispatch) => {
+  return (id) => {
+    dispatch({ type: "SHOW_BLOGPOST", payload: id });
+  };
+};
+
 export const { Context, Provider } = createDataContext(
   blogReducer,
-  { addBlogPost, deleteBlogPost },
+  { addBlogPost, deleteBlogPost, showBlogPost },
   []
 );
