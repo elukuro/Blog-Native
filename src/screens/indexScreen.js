@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,10 +12,20 @@ import { Feather } from "@expo/vector-icons";
 
 const IndexScreen = ({ navigation }) => {
   // get value from BlogProvider using useContext function from react
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+  const { state, addBlogPost, deleteBlogPost, getBlogPost } =
+    useContext(Context);
 
   // section 12 134 context is the way to moving information not to manage state
   // managing state are using useState
+  useEffect(() => {
+    getBlogPost();
+    const listener = navigation.addListener("didFocus", () => {
+      getBlogPost();
+    });
+    return () => {
+      listener.remove();
+    };
+  }, []);
 
   return (
     <View>
